@@ -40,3 +40,16 @@ export function useWeather() {
     },[apikey]) // APIキーが変わったときに再実行
     return { weather, loading, error };
 }
+
+// APIで返ってくる天気の数字をカテゴリーに分類する関数
+// 400番台は未使用
+export function getWeatherCategory(weatherID) {
+    if (weatherID >= 200 && weatherID < 300) return 'thunderstorm';
+    if (weatherID >= 300 && weatherID < 400) return 'drizzle';
+    if (weatherID >= 400 && weatherID < 600) return 'rain';
+    if (weatherID >= 600 && weatherID < 700) return 'snow';
+    if (weatherID >= 700 && weatherID < 800) return 'mist';
+    if (weatherID === 800) return 'clear';
+    if (weatherID > 800) return 'clouds';
+    return 'clear';
+}
