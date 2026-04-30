@@ -201,3 +201,33 @@ export function createClouds(scene) {
 
     return { mesh: sprites[0], animate };
 }
+
+// 雷のエフェクト
+export function creatrThunderstorm(scene) {
+    const rin = createRain(scene);
+    let flashTimer = 0;
+
+    // 画面全他を覆うプレーンを閃光にする
+    // MeshBasicMaterialは光に影響されない
+    const flashMat = new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0,
+        depthWrite: false,
+    })
+    const flashPlane = new THREE.Mesh(new THREE.PlaneGeometry(50, 50), flashMat);
+    flashPlane.position.z = 4;// カメラの手間に配置
+    scene.add(flashPlane);
+
+    function animate() {
+        rain.animate();
+        flashTimer++;
+        if (flashTimer > 100 && Math.random() > 0.97) {
+            flashMat.opacity = 0.6 + Math.random() * 0.3;
+            flashTimer = 0;
+        } else {
+            flashMat.opacity *= 0.8;// 徐々に透明にする
+        }
+    }
+    return { mesh: rain.mesh, animate};
+}
