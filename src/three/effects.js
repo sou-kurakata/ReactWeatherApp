@@ -99,3 +99,28 @@ export function createSnow(screen) {
     }
     return {mesh: snow, animate};
 }
+
+// 晴れのエフェクト
+export function createClear(scene) {
+    const geometry = new THREE.SphereGeometry(0.9, 32, 32);
+    const material = new THREE.MeshBasicMaterial({ color: 0xffe066})
+    const sun = new THREE.Mesh(sunGeo, sunMat);
+    sun.position.set(3.5, 3, -2);
+    scene.add(sun);
+
+    // 中心から外に向かって透明になるグラデーションで光彩テクスチャを生成
+    const glowCanvas = document.createElement('canvas');
+    glowCanvas.width = 128;
+    glowCanvas.height = 128;
+    const ctx = glowCanvas.getContext('2d');
+    const grad = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+    grad.addColorStop(0,    'rgba(255, 240, 100, 0.8)');
+    grad.addColorStop(0.4,  'rgba(255, 220, 50, 0.3)');
+    grad.addColorStop(1,    'rgba(255, 200, 0, 0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 128, 128);
+
+    const glow = new THREE.Sprite(new THREE.SpriteMaterial({
+        map: new THREE.CanvasTexture(glowCanvas),
+    }))
+    }
