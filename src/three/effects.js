@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 // 雨のエフェクト
-export function createRain(screen) {
+export function createRain(scene) {
     const count = 3000;
     // 雨の通る場所の座標
     // 2は始点と終点、3はxyzの座標
@@ -27,7 +27,7 @@ export function createRain(screen) {
 
     const material = new THREE.LineBasicMaterial({ color: 0xaaddff, transparent: true, opacity: 0.55})
     const rain = new THREE.LineSegments(geometry, material);
-    screen.add(rain);
+    scene.add(rain);
 
     function animate() {
         const pos = rain.geometry.attributes.position.array;
@@ -49,7 +49,7 @@ export function createRain(screen) {
 }
 
 // 雪のエフェクト
-export function createSnow(screen) {
+export function createSnow(scene) {
     // 中心が白く外が透明な円テクスチャで雪片らしく見せる
     const canvas = document.createElement('canvas');
     canvas.width = 64;
@@ -86,7 +86,7 @@ export function createSnow(screen) {
     })
 
     const snow = new THREE.Points(geometry, material);
-    screen.add(snow);
+    scene.add(snow);
 
     function animate() {
         const pos = snow.geometry.attributes.position.array;
@@ -102,10 +102,10 @@ export function createSnow(screen) {
 
 // 晴れのエフェクト
 export function createClear(scene) {
-    const geometry = new THREE.SphereGeometry(0.9, 32, 32);
-    const material = new THREE.MeshBasicMaterial({ color: 0xffe066})
+    const sunGeo = new THREE.SphereGeometry(0.9, 32, 32);
+    const sunMat = new THREE.MeshBasicMaterial({ color: 0xffe066})
     const sun = new THREE.Mesh(sunGeo, sunMat);
-    sun.position.set(3.5, 3, -2);
+    sun.position.set(3.5, 3, -2);// 太陽の位置
     scene.add(sun);
 
     // 中心から外に向かって透明になるグラデーションで光彩テクスチャを生成
@@ -122,5 +122,21 @@ export function createClear(scene) {
 
     const glow = new THREE.Sprite(new THREE.SpriteMaterial({
         map: new THREE.CanvasTexture(glowCanvas),
+        transparent: true,
+        depthWrite: false,
     }))
+    glow.scale.set(6, 6, 1);
+    glow.position.copy(sun.position);
+    scene.add(glow);
+
+    // 太陽の大きさを少しづつ変える関数
+    let t = 0;
+    function animate() {
+        t += 0.02
+        const pulse = 1 + Math.sin(t) * 0.04;
+        sun.scale.setScalar(pulse);
+        glow.scale.set(6 * pulse, 6 * pulse, 1);
     }
+
+    return { mesh: sun, animate};
+}
