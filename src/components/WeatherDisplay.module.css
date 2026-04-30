@@ -1,0 +1,46 @@
+.continer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    user-select: none;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 2rem 3rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.city {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0.2rem;
+}
+
+.icon {
+    width: 100px;
+    height: 100px;
+}
+
+.description {
+    font-size: 1.2rem;
+    margin-bottom: 0.4rem;
+    text-transform: capitalize;
+}
+
+.temp {
+    font-size: 5rem;
+    font-weight: bold;
+    line-height: 1;
+    margin-bottom: 1rem;
+}
+
+.details {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 1rem;
+    opacity: 0.9;
+}
