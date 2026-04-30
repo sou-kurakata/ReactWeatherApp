@@ -140,3 +140,64 @@ export function createClear(scene) {
 
     return { mesh: sun, animate};
 }
+
+// 雲のエフェクト
+export function createClouds(scene) {
+    // 複数の円を重ねてモコモコした雲シルエットを描く
+    const canvas = document.createElement('canvas');
+    canvas.width = 256;
+    canvas.height = 128;
+    const ctx = canvas.getContext('2d');
+
+    // 小さな円を並べて雲の輪郭を作る
+    const puffs = [
+        { x: 80,  y: 80, r: 50 },
+        { x: 128, y: 65, r: 60 },
+        { x: 176, y: 80, r: 50 },
+        { x: 100, y: 95, r: 42 },
+        { x: 155, y: 95, r: 42 },
+    ]
+    puffs.forEach(({ x, y, r }) => {
+        const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+        g.addColorStop(0,   'rgba(255,255,255,1)');
+        g.addColorStop(0.6, 'rgba(240,240,250,0.9)');
+        g.addColorStop(1,   'rgba(220,225,235,0)');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fill();
+    })
+    const texture = new THREE.CanvasTexture(canvas);
+
+    // 複数の Sprite を配置して雲の群れを作る
+    const sprites = [];
+    for (let i = 0; i < 18; i++) {
+        const mat = new THREE.SpriteMaterial({
+        map: texture,
+        transparent: true,
+        opacity: 0.55 + Math.random() * 0.35,
+        depthWrite: false,
+        });
+        const sprite = new THREE.Sprite(mat);
+        const w = 4 + Math.random() * 5;
+        sprite.scale.set(w, w * 0.55, 1);
+        sprite.position.set(
+        (Math.random() - 0.5) * 24,
+        (Math.random() - 0.5) * 5 + 1,
+        -2 - Math.random() * 3,
+        );
+        scene.add(sprite);
+        sprites.push(sprite);
+    }
+
+    function animate() {
+        // 右から左へゆっくり流す。画面外に出たら反対側に戻す
+        sprites.forEach(s => {
+        // 大きさを計算に入れることで大きい雲と小さい雲で速さに差を出して奥行きを持たせる
+        s.position.x += 0.004 + s.scale.x * 0.0003;
+        if (s.position.x > 14) s.position.x = -14;
+        })
+    }
+
+    return { mesh: sprites[0], animate };
+}
