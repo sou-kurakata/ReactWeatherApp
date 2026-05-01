@@ -24,7 +24,6 @@ export function createRain(scene) {
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.BufferAttribute(position, 3)) // THREE.BufferAttributeは頂点座標を保持する
 
-
     const material = new THREE.LineBasicMaterial({ color: 0xaaddff, transparent: true, opacity: 0.55})
     const rain = new THREE.LineSegments(geometry, material);
     scene.add(rain);
