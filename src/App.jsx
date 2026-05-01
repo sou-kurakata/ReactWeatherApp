@@ -10,7 +10,7 @@ function App() {
 
   const category = weather ? getWeatherCategory(weather.weather[0].id) : 'clear';
   // デバック用
-  // const category = 'thunderstorm'
+  // const category = 'mist';
 
   return (
     <div className={styles.root}>
