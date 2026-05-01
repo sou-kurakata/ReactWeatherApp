@@ -1,4 +1,4 @@
-import styles from './Weatherdisplay.module.css';
+import styles from './WeatherDisplay.module.css';
 
 function WeatherDisplay({ weather}) {
     // jsの分割代入の書き方

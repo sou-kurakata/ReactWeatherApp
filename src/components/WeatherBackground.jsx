@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { createEffect, getBackgroundColor } from '../three/effects';
+import styles from './WeatherBackground.module.css'
 
 function WeatherBackground({ category }) {
     const mountRef = useRef(null);
@@ -43,7 +44,7 @@ function WeatherBackground({ category }) {
             cancelAnimationFrame(animationId);
             window.removeEventListener('resize', onResize);
             renderer.dispose();
-            if (mount.contains(renderer.documentElement)) {
+            if (mount.contains(renderer.domElement)) {
                 mount.removeChild(renderer.domElement);
             }
             if (scene.fog) scene.fog = null; 
