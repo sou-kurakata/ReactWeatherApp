@@ -24,7 +24,6 @@ export function createRain(scene) {
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.BufferAttribute(position, 3)) // THREE.BufferAttributeは頂点座標を保持する
 
-
     const material = new THREE.LineBasicMaterial({ color: 0xaaddff, transparent: true, opacity: 0.55})
     const rain = new THREE.LineSegments(geometry, material);
     scene.add(rain);
@@ -283,4 +282,18 @@ export function createEffect(category, scene) {
         default:
             return createClear(scene);
     }
+}
+
+// 天気カテゴリに応じた背景色を返す
+export function getBackgroundColor(category) {
+  const colors = {
+    clear:       0x87ceeb,  // 空色
+    clouds:      0x708090,  // スレートグレー
+    rain:        0x2f4f6f,  // 暗い青
+    drizzle:     0x4a6f8a,  // くすんだ青
+    snow:        0xdce8f0,  // 薄い水色
+    thunderstorm:0x1a1a2e,  // 暗い紫
+    mist:        0x8899aa,  // 霞んだグレー
+  }
+  return colors[category] ?? 0x87ceeb
 }
