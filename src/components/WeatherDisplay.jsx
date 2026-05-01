@@ -3,7 +3,7 @@ import styles from './Weatherdisplay.module.css';
 function WeatherDisplay({ weather}) {
     // jsの分割代入の書き方
     const { name, main, weather: conditions, wind } = weather;
-    const iconUl = 'https://openweathermap.org/img/wn/${conditions[0].icon}@2x.png';
+    const iconUrl = `https://openweathermap.org/img/wn/${conditions[0].icon}@2x.png`;
 
     return (
         // styles.クラスの名前で指定

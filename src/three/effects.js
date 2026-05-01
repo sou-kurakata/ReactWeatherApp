@@ -284,3 +284,17 @@ export function createEffect(category, scene) {
             return createClear(scene);
     }
 }
+
+// 天気カテゴリに応じた背景色を返す
+export function getBackgroundColor(category) {
+  const colors = {
+    clear:       0x87ceeb,  // 空色
+    clouds:      0x708090,  // スレートグレー
+    rain:        0x2f4f6f,  // 暗い青
+    drizzle:     0x4a6f8a,  // くすんだ青
+    snow:        0xdce8f0,  // 薄い水色
+    thunderstorm:0x1a1a2e,  // 暗い紫
+    mist:        0x8899aa,  // 霞んだグレー
+  }
+  return colors[category] ?? 0x87ceeb
+}
