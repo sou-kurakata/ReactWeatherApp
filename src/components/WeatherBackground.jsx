@@ -19,12 +19,12 @@ function WeatherBackground({ category }) {
         renderer.setSize(mount.clientWidth, mount.clientHeight);
         mount.appendChild(renderer.domElement);
 
-        const effect = createEffect(category);
+        const effect = createEffect(category, scene);
 
         // アニメーションループ
         let animationId;
         function loop() {
-            anumationTd = requestAnimationFrame(loop);
+            animationId = requestAnimationFrame(loop);
             effect.animate();
             renderer.render(scene, camera);
         }
@@ -40,7 +40,7 @@ function WeatherBackground({ category }) {
 
         // クリーンアップ
         return () => {
-            cancelAnimationFrame(animateionId);
+            cancelAnimationFrame(animationId);
             window.removeEventListener('resize', onResize);
             renderer.dispose();
             if (mount.contains(renderer.documentElement)) {
@@ -51,3 +51,5 @@ function WeatherBackground({ category }) {
     }, [category]);
     return <div ref={mountRef} style={{ position: 'absolute', inset: 0}} />;
 }
+
+export default WeatherBackground
