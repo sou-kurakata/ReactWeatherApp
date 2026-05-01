@@ -203,8 +203,8 @@ export function createClouds(scene) {
 }
 
 // 雷のエフェクト
-export function creatrThunderstorm(scene) {
-    const rin = createRain(scene);
+export function createThunderstorm(scene) {
+    const rain = createRain(scene);
     let flashTimer = 0;
 
     // 画面全他を覆うプレーンを閃光にする
@@ -230,4 +230,36 @@ export function creatrThunderstorm(scene) {
         }
     }
     return { mesh: rain.mesh, animate};
+}
+
+// 霧のエフェクト
+export function createMist(scene) {
+    scene.fog = new THREE.FogExp2(0x8899aa, 0.15);// 引数は(色, 密度)
+
+    const count = 500;
+    const positions = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+        positions[i * 3]     = (Math.random() - 0.5) * 20;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
+    }
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+    const material = new THREE.PointsMaterial({
+        color: 0xaabbcc,
+        size: 0.3,
+        transparent: true,
+        opacity: 0.3,
+    })
+
+    const mist = new THREE.Points(geometry, material);
+    scene.add(mist);
+
+    function animate() {
+        mist.rotation.y += 0.0005;
+    }
+
+    return { mesh: mist, animate };
 }
