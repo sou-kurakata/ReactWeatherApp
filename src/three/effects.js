@@ -263,3 +263,24 @@ export function createMist(scene) {
 
     return { mesh: mist, animate };
 }
+
+// エフェクトのファクトリー関数
+export function createEffect(category, scene) {
+    switch (category) {
+        case 'rain' :
+        case 'drizzle' :
+            return createRain(scene);
+        case 'snow' :
+            return createSnow(scene);
+        case 'clear' :
+            return createClear(scene);
+        case 'clouds' :
+            return createClouds(scene);
+        case 'thunderstorm' :
+            return createThunderstorm(scene);
+        case 'mist' :
+            return createMist(scene);
+        default:
+            return createClear(scene);
+    }
+}
