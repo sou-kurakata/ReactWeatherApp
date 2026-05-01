@@ -1,0 +1,23 @@
+.root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading {
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.error {
+  color: #faa;
+  font-size: 1.2rem;
+}
